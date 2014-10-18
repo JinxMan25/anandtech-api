@@ -4,7 +4,6 @@ class ArticlesController < ApplicationController
 
   end
 
-
   private
 
   def get_articles

@@ -1,4 +1,5 @@
 AnandtechApi::Application.routes.draw do
+  get "articles", :to => "articles#articles"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
