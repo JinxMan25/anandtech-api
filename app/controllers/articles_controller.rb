@@ -23,8 +23,7 @@ class ArticlesController < ApplicationController
         @featured_articles << article 
       end
     end
-    @all_articles.map!{ |k| k if !k[:featured] }
-    byebug
+    @all_articles.select!{ |k| k if !k[:featured] }
   end
 
   def scrape_articles(doc)
