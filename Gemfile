@@ -7,7 +7,6 @@ gem 'rails', '3.2.13'
 
 gem 'sqlite3'
 gem 'nokogiri'
-gem 'byebug'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -20,6 +19,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'byebug'
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password

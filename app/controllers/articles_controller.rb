@@ -15,7 +15,7 @@ class ArticlesController < ApplicationController
 
     doc = Nokogiri::HTML(open("http://anandtech.com"))
 
-    @all_articles = Rails.cache.fetch("anandtech/articles/v8") do
+    @all_articles = Rails.cache.fetch("anandtech/articles/v122") do
       scrape_articles(doc)
     end
     @all_articles.each do |article|
@@ -23,7 +23,8 @@ class ArticlesController < ApplicationController
         @featured_articles << article 
       end
     end
-    @all_articles.reject!{ |k| k == :featured }
+    @all_articles.map!{ |k| k if !k[:featured] }
+    byebug
   end
 
   def scrape_articles(doc)
