@@ -15,7 +15,9 @@ class ArticlesController < ApplicationController
 
     doc = Nokogiri::HTML(open("http://anandtech.com"))
 
-    @all_articles = scrape_articles(doc)
+    @all_articles = Rails.cache.fetch("anandtech/articles", :expires_in => 5.minute) do 
+      scrape_articles(doc)
+    end
     @all_articles.each do |article|
       if article[:featured]
         @featured_articles << article 
@@ -35,6 +37,10 @@ class ArticlesController < ApplicationController
       temp_cell = { :title => article_title, :link => source }
     @data << temp_cell
     end
+    #featured stories
+    doc.css(".hide_resp2 .b").each do |author|
+    end
+
     doc.css(".hide_resp2 h2 a , .featured_info h2").each do |featured_title|
       source = featured_title.attr("href")
       tempCell = { :title => featured_title.text, :featured => "true" }
