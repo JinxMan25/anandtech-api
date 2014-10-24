@@ -32,13 +32,17 @@ class ArticlesController < ApplicationController
 
     doc.css(".l_").each do |article_container|
       article_title = article_container.css("h2").text
+
       source = article_container.css("a").attr("href").text
     
-      temp_cell = { :title => article_title, :link => source }
+      image_link = article_container.css("img").first.attr("src")
+
+      temp_cell = { :title => article_title, :link => source, :image_url => image_link }
     @data << temp_cell
     end
     #featured stories
     doc.css(".hide_resp2 h2 a , .featured_info h2 a").each do |featured_title|
+      byebug
       source = featured_title.attr("href")
       tempCell = { :title => featured_title.text, :featured => "true", :link => source }
       @data << tempCell
