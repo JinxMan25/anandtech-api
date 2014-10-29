@@ -26,6 +26,10 @@ class ArticlesController < ApplicationController
     @all_articles.select!{ |k| k if !k[:featured] }
   end
 
+  def search_articles
+    search_query = params[:search_query]
+  end
+
   def scrape_articles(doc)
     
     @data = []
