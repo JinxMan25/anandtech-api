@@ -49,6 +49,13 @@ class ArticlesController < ApplicationController
 
       posted_on = article_container.css(".cont_box1_txt span").text
 
+      posted = /[0-9]\s\w+\s\w+/.match("#{posted_on}").to_s  
+
+      if posted.nil?
+        posted = //.match("#{posted_on}").to_s
+      else
+      end
+
       temp_cell = { :title => article_title, :link => source, :image_url => image_link, :author => author, :description => article_description, :comments => comment_count }
     @data << temp_cell
     end
