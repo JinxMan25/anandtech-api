@@ -41,9 +41,11 @@ class ArticlesController < ApplicationController
     
       image_link = article_container.css("img").first.attr("src")
 
+      article_description = article_container.css(".cont_box1_txt p").text
+
       author = article_container.css(".cont_box1_txt .b").text
 
-      temp_cell = { :title => article_title, :link => source, :image_url => image_link, :author => author }
+      temp_cell = { :title => article_title, :link => source, :image_url => image_link, :author => author, :description => description }
     @data << temp_cell
     end
     #featured stories
