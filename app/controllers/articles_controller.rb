@@ -45,7 +45,7 @@ class ArticlesController < ApplicationController
 
       author = article_container.css(".cont_box1_txt .b").text
 
-      temp_cell = { :title => article_title, :link => source, :image_url => image_link, :author => author, :description => description }
+      temp_cell = { :title => article_title, :link => source, :image_url => image_link, :author => author, :description => article_description }
     @data << temp_cell
     end
     #featured stories
