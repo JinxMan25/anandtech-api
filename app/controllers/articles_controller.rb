@@ -47,6 +47,8 @@ class ArticlesController < ApplicationController
 
       comment_count = article_container.css(".cont_box1_txt strong").text
 
+      posted_on = article_container.css(".cont_box1_txt span").text
+
       temp_cell = { :title => article_title, :link => source, :image_url => image_link, :author => author, :description => article_description, :comments => comment_count }
     @data << temp_cell
     end
