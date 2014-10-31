@@ -12,8 +12,13 @@ class ArticlesController < ApplicationController
 
   def filtered
     _filter = param[:filter].to_s
+    if params[:page]
+      page = params[:page]
+    else
+      page = 1
+    end
     
-    url = "http://anandtech.com/tag/#{_filter}"
+    url = "http://anandtech.com/tag/#{_filter}/#{page}"
 
     doc = Nokogiri::HTML(open(url))
     @filtered_articles = Rails.cache.fetch("articles/#{_filter}", :expires_in => 5.minute) do
