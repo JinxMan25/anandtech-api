@@ -22,7 +22,7 @@ class ArticlesController < ApplicationController
 
     doc = Nokogiri::HTML(open(url))
     @filtered_articles = Rails.cache.fetch("articles/#{_filter}", :expires_in => 5.minute) do
-      scrape_articles(doc)
+      scrape_articles(doc, true)
     end
 
     @articles = { :articles => @filtered_articles }
@@ -40,7 +40,7 @@ class ArticlesController < ApplicationController
     doc = Nokogiri::HTML(open("http://anandtech.com"))
 
     @all_articles = #Rails.cache.fetch("anandtech/articles", :expires_in => 5.minute) do 
-      scrape_articles(doc)
+      scrape_articles(doc, false)
     #end
     @all_articles.each do |article|
       if article[:featured]
@@ -51,11 +51,17 @@ class ArticlesController < ApplicationController
   end
 
 
-  def scrape_articles(doc)
+  def scrape_articles(doc, isFiltered)
     
     @data = []
 
-    doc.css(".l_").each do |article_container|
+    if isFiltered
+      document = doc.css(".cont_box1")
+    else
+      document = doc.css(".l_")
+    end
+
+    document.each do |article_container|
       article_title = article_container.css("h2").text
 
       source = article_container.css("a").attr("href").text
