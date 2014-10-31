@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
   end
 
   def filtered
-    _filter = param[:filter].to_s
+    _filter = params[:filter].to_s
     if params[:page]
       page = params[:page]
     else
@@ -24,6 +24,10 @@ class ArticlesController < ApplicationController
     @filtered_articles = Rails.cache.fetch("articles/#{_filter}", :expires_in => 5.minute) do
       scrape_articles(doc)
     end
+
+    @articles = { :articles => @filtered_articles }
+
+    render :json => @articles
   end
 
   private
