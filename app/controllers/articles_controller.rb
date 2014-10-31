@@ -51,12 +51,12 @@ class ArticlesController < ApplicationController
 
       posted = /[0-9]\s\w+\s\w+/.match("#{posted_on}").to_s  
 
-      if posted.nil?
+      if posted.empty?
         posted = /\d+\W\d+\W[0-9]+/.match("#{posted_on}").to_s
       else
       end
 
-      temp_cell = { :title => article_title, :link => source, :image_url => image_link, :author => author, :description => article_description, :comments => comment_count }
+      temp_cell = { :title => article_title, :link => source, :image_url => image_link, :author => author, :description => article_description, :comments => comment_count, :posted => posted }
     @data << temp_cell
     end
     #featured stories
