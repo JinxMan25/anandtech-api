@@ -52,7 +52,7 @@ class ArticlesController < ApplicationController
       posted = /[0-9]\s\w+\s\w+/.match("#{posted_on}").to_s  
 
       if posted.nil?
-        posted = //.match("#{posted_on}").to_s
+        posted = /\d+\W\d+\W[0-9]+/.match("#{posted_on}").to_s
       else
       end
 
