@@ -6,6 +6,21 @@ class ArticlesController < ApplicationController
     render :json => @articles
   end
 
+  def search_articles
+    search_query = params[:search_query]
+  end
+
+  def filtered
+    _filter = param[:filter].to_s
+    
+    url = "http://anandtech.com/tag/#{_filter}"
+
+    doc = Nokogiri::HTML(open(url))
+    @filtered_articles = Rails.cache.fetch("articles/#{_filter}", :expires_in => 5.minute) do
+      scrape_articles(doc)
+    end
+  end
+
   private
 
   def get_articles
@@ -26,9 +41,6 @@ class ArticlesController < ApplicationController
     @all_articles.select!{ |k| k if !k[:featured] }
   end
 
-  def search_articles
-    search_query = params[:search_query]
-  end
 
   def scrape_articles(doc)
     
