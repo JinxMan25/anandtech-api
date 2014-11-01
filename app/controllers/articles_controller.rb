@@ -40,7 +40,12 @@ class ArticlesController < ApplicationController
   end
 
   def get_article_content
-    
+    link = params[:link].to_s
+
+    doc = Nokogiri::HTML(open(link))
+    review = doc.css(".review")
+    byebug
+
   end
 
   private
