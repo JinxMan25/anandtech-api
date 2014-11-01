@@ -39,6 +39,10 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def get_article_content
+    
+  end
+
   private
 
   def get_articles
@@ -74,6 +78,7 @@ class ArticlesController < ApplicationController
       article_title = article_container.css("h2").text
 
       source = article_container.css("a").attr("href").text
+      source_4dcode = /\d\d\d\d/.match("#{source}").to_s
     
       image_link = article_container.css("img").first.attr("src")
 
