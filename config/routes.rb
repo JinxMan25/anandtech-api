@@ -3,7 +3,7 @@ AnandtechApi::Application.routes.draw do
   get "articles/search/:search_query", :to => "articles#search_articles"
   get "articles/:filter/:page", :to => "articles#filtered"
   get "articles/:page", :to => "articles#next_page"
-  get "articles/get/:link", :to => "articles#get_article_content"
+  get "article/get/:link", :to => "articles#get_article_content"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

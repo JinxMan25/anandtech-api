@@ -43,11 +43,12 @@ class ArticlesController < ApplicationController
     anchor = params[:link].to_s
     anchor.gsub!(/\*\*/, "/")
     byebug
-    link = "http://anandtech.com#{anchor}"
+    link = "http://anandtech.com/#{anchor}"
 
     doc = Nokogiri::HTML(open(link))
     review = doc.css(".review")
-
+    @article = {:article => "hi" }
+    render :json => @article
   end
 
   private
