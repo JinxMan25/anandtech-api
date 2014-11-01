@@ -30,6 +30,15 @@ class ArticlesController < ApplicationController
     render :json => @articles
   end
 
+  def next_page
+    page = params[:page].to_i
+
+    url = "http://anandtech.com/Page/#{page}"
+    @all_articles = Rails.cache.fetch("articles/#{page}", :expires_in => 5.minute) do
+      scrape_articles(doc, false)
+    end
+  end
+
   private
 
   def get_articles
