@@ -46,8 +46,15 @@ class ArticlesController < ApplicationController
 
     doc = Nokogiri::HTML(open(link))
     review = doc.at(".review")
+    article_content = []
     review.children.each do |item|
-      byebug
+      if item.css("img")
+       img_url = item.css("img").first.attr("src")
+       img_url << article_content
+      else if item.css("p")
+        paragraph = item.css("p").text
+        paragraph << article_content
+      end
     end
     @article = {:article => "hi" }
     render :json => @article
