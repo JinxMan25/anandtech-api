@@ -49,7 +49,7 @@ class ArticlesController < ApplicationController
     review = doc.at(".review")
     article_content = []
     review.children.each do |item|
-      if !item.css("img").empty? && !!(item.css("img").first.attr("src").to_s =~ /anandtech/)
+      if !item.css("img").empty? && !!(item.css("img").first.attr("src").to_s =~ /images.anandtech/)
        img_url = item.css("img").attr("src").to_s
        article_content.push(img_url)
       elsif !item.css("p").empty?
@@ -97,6 +97,7 @@ class ArticlesController < ApplicationController
 
       source = article_container.css("a").attr("href").text
       source.gsub!(/\//, "**") 
+      source.gsub!(/^\*\*/, "")
       source_4dcode = /\d\d\d\d/.match("#{source}").to_s
     
       image_link = article_container.css("img").first.attr("src")
