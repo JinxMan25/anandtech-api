@@ -48,11 +48,19 @@ class ArticlesController < ApplicationController
     article_title = doc.css(".blog_top_left h2").text
     review = doc.at(".review")
     article_content = []
+    select_options = []
     review.children.each do |item|
       item.children.each do |divelement|
         if divelement.name == "img" && !!(divelement.attr("src").to_s =~ /images.anandtech/)
          img_url = item.css("img").attr("src").to_s
          article_content.push(img_url)
+        elsif divelement.name == ("select")
+          divelement.css("option").each do |option|
+            link = option.attr("value").to_s
+            link_title = option.text
+            tempOption = { :title => link_title, :url => link }
+            select_options << tempOption
+          end
         elsif divelement.name == ("p")
           if !divelement.css("img").empty?
             img_url = divelement.css("img").attr("src").to_s
@@ -64,7 +72,7 @@ class ArticlesController < ApplicationController
         end
       end
     end
-    @article = {:article => article_content, :title => article_title }
+    @article = {:article => article_content, :title => article_title, :select_options => select_options }
     render :json => @article
   end
 
