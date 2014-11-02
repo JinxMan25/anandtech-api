@@ -49,12 +49,14 @@ class ArticlesController < ApplicationController
     review = doc.at(".review")
     article_content = []
     review.children.each do |item|
-      if !item.css("img").empty? && !!(item.css("img").first.attr("src").to_s =~ /images.anandtech/)
-       img_url = item.css("img").attr("src").to_s
-       article_content.push(img_url)
-      elsif !item.css("p").empty?
-        paragraph = item.css("p").text
-        article_content.push(paragraph)
+      item.children.each do |divelement|
+        if !item.css("img").empty? && !!(item.css("img").first.attr("src").to_s =~ /images.anandtech/)
+         img_url = item.css("img").attr("src").to_s
+         article_content.push(img_url)
+        elsif !item.css("p").empty?
+          paragraph = item.css("p").text
+          article_content.push(paragraph)
+        end
       end
     end
     @article = {:article => article_content, :title => article_title }
