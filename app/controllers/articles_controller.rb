@@ -45,18 +45,22 @@ class ArticlesController < ApplicationController
     link = "http://anandtech.com/#{anchor}"
 
     doc = Nokogiri::HTML(open(link))
+    article_title = doc.css(".blog_top_left h2").text
     review = doc.at(".review")
     article_content = []
     review.children.each do |item|
-      if item.css("img")
-       img_url = item.css("img").first.attr("src")
+      byebug
+=begin
+      if !item.css("img").empty?
+       img_url = item.css("img").attr("src").to_s
        img_url << article_content
-      else if item.css("p")
+      elsif !item.css("p").empty?
         paragraph = item.css("p").text
         paragraph << article_content
       end
+=end
     end
-    @article = {:article => "hi" }
+    @article = {:article => article_content, :title => article_title }
     render :json => @article
   end
 
