@@ -49,16 +49,13 @@ class ArticlesController < ApplicationController
     review = doc.at(".review")
     article_content = []
     review.children.each do |item|
-      byebug
-=begin
       if !item.css("img").empty?
        img_url = item.css("img").attr("src").to_s
-       img_url << article_content
+       article_content.push(img_url)
       elsif !item.css("p").empty?
         paragraph = item.css("p").text
-        paragraph << article_content
+        article_content.push(paragraph)
       end
-=end
     end
     @article = {:article => article_content, :title => article_title }
     render :json => @article
