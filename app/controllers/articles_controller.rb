@@ -50,12 +50,17 @@ class ArticlesController < ApplicationController
     article_content = []
     review.children.each do |item|
       item.children.each do |divelement|
-        if !item.css("img").empty? && !!(item.css("img").first.attr("src").to_s =~ /images.anandtech/)
+        if divelement.name == "img" && !!(divelement.attr("src").to_s =~ /images.anandtech/)
          img_url = item.css("img").attr("src").to_s
          article_content.push(img_url)
-        elsif !item.css("p").empty?
-          paragraph = item.css("p").text
+        elsif divelement.name == ("p")
+          if !divelement.css("img").empty?
+            img_url = divelement.css("img").attr("src").to_s
+            article_content.push(img_url)
+          else
+          paragraph = divelement.text
           article_content.push(paragraph)
+          end
         end
       end
     end
