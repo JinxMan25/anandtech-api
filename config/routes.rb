@@ -4,6 +4,7 @@ AnandtechApi::Application.routes.draw do
   get "articles/:filter/:page", :to => "articles#filtered"
   get "articles/:page", :to => "articles#next_page"
   get "article/get/:link", :to => "articles#get_article_content"
+  get "bench/single_cpu/:value", :to => "articles#single_cpu_benchmark"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
