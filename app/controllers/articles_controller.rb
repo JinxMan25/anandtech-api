@@ -51,8 +51,8 @@ class ArticlesController < ApplicationController
   end
 
   def bench_comparison
-    first_product = params[:first] 
-    second_product = params[:second]
+    first_product = params[:first].to_s
+    second_product = params[:second].to_s
 
     url = "http://anandtech.com/bench/product/#{first_product}?vs=#{second_product}"
 
@@ -62,8 +62,8 @@ class ArticlesController < ApplicationController
     @winner = []
     @loser = []
 
-    product_1 = doc.css(".compare1").text
-    product_2 = doc.css(".compare2").text
+    product_1 = doc.css(".compare1").text.gsub(/\s\s/, "")
+    product_2 = doc.css(".compare2").text.gsub(/\s\s/, "")
     
     rating_list.each do |rating|
       description = rating.css(".rating_bench strong").text
@@ -77,6 +77,7 @@ class ArticlesController < ApplicationController
       @loser << loser_rating
     end
     @comparison = { :winner => @winner, :loser => @loser, :product_1 => product_1, :product_2 => product_2 }
+    byebug
 
     render :json => @comparison
 
