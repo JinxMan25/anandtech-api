@@ -50,6 +50,16 @@ class ArticlesController < ApplicationController
     render :json => @benchmark
   end
 
+  def bench_comparison
+    first_product = params[:first] 
+    second_product = params[:second]
+
+    url = "http://anandtech.com/bench/product/#{first}?vs=#{second}"
+
+    doc = Nokogiri::HTML(open(url))
+
+  end
+
   def next_page
     page = params[:page].to_i
 
