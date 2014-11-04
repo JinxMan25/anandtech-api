@@ -58,6 +58,22 @@ class ArticlesController < ApplicationController
 
     doc = Nokogiri::HTML(open(url))
 
+    rating_list = doc.css(".rating_list")
+    @winner = []
+    @loser = []
+    rating_list.each do |rating|
+      description = rating.css(".rating_bench strong").text
+
+      win_score = rating.css(".win strong").text
+      winner_rating = { :description => description, :rating => win_score }
+      @winner << winner_rating
+
+      lose_score = rating.css(".lose strong").text
+      loser_rating = { :description => description, :rating => lose_score }
+      @loser << loser_rating
+    end
+    @comparison = { :winner => @winner, :loser => @loser }
+
   end
 
   def next_page
