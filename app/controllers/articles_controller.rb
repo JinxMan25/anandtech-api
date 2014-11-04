@@ -30,6 +30,19 @@ class ArticlesController < ApplicationController
     render :json => @articles
   end
 
+  def single_cpu_benchmark
+    value = params[:value]
+
+    url = "http://anandtech.com/bench/product/#{value}"
+
+    doc = Nokogiri::HTML(open(url))
+
+    benchmark = doc.css(".rating_list")
+
+
+
+  end
+
   def next_page
     page = params[:page].to_i
 
