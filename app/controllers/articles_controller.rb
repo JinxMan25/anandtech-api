@@ -37,10 +37,17 @@ class ArticlesController < ApplicationController
 
     doc = Nokogiri::HTML(open(url))
 
+    @benchmark = []
+
     benchmark = doc.css(".rating_list")
+    benchmark.each do |bar|
+      description = bar.css("span").text
 
-
-
+      rating = bar.css("strong").text
+      benchmark = { :description => description, :rating => rating }
+      @benchmark << benchmark
+    end
+    render :json => @benchmark
   end
 
   def next_page
