@@ -61,6 +61,10 @@ class ArticlesController < ApplicationController
     rating_list = doc.css(".rating_list")
     @winner = []
     @loser = []
+
+    product_1 = doc.css(".compare1").text
+    product_2 = doc.css(".compare2").text
+    
     rating_list.each do |rating|
       description = rating.css(".rating_bench strong").text
 
@@ -72,7 +76,9 @@ class ArticlesController < ApplicationController
       loser_rating = { :description => description, :rating => lose_score }
       @loser << loser_rating
     end
-    @comparison = { :winner => @winner, :loser => @loser }
+    @comparison = { :winner => @winner, :loser => @loser, :product_1 => product_1, :product_2 => product_2 }
+
+    render :json => @comparison
 
   end
 
