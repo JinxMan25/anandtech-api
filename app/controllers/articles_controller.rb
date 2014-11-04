@@ -54,7 +54,7 @@ class ArticlesController < ApplicationController
     first_product = params[:first] 
     second_product = params[:second]
 
-    url = "http://anandtech.com/bench/product/#{first}?vs=#{second}"
+    url = "http://anandtech.com/bench/product/#{first_product}?vs=#{second_product}"
 
     doc = Nokogiri::HTML(open(url))
 
