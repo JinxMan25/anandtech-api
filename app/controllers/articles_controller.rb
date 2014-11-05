@@ -58,28 +58,12 @@ class ArticlesController < ApplicationController
 
     doc = Nokogiri::HTML(open(url))
 
-    rating_list = doc.css(".rating_list")
-    @winner = []
-    @loser = []
-
-    product_1 = doc.css(".compare1").text.gsub(/\s\s/, "")
-    product_2 = doc.css(".compare2").text.gsub(/\s\s/, "")
-    
-    rating_list.each do |rating|
-      description = rating.css(".rating_bench strong").text
-
-      win_score = rating.css(".win strong").text
-      winner_rating = { :description => description, :rating => win_score }
-      @winner << winner_rating
-
-      lose_score = rating.css(".lose strong").text
-      loser_rating = { :description => description, :rating => lose_score }
-      @loser << loser_rating
+    @bench_comparison = Rails.cache.fetch("bench/#{first_product}/#{second_product}", :expires_in => 3.days) do
+      get_bench(doc)
     end
-    @comparison = { :winner => @winner, :loser => @loser, :product_1 => product_1, :product_2 => product_2 }
-    byebug
 
-    render :json => @comparison
+
+    render :json => @bench_comparison
 
   end
 
@@ -130,6 +114,28 @@ class ArticlesController < ApplicationController
   end
 
   private
+
+  def get_bench(doc)
+    rating_list = doc.css(".rating_list")
+    @winner = []
+    @loser = []
+
+    product_1 = doc.css(".compare1").text.gsub(/\s\s/, "")
+    product_2 = doc.css(".compare2").text.gsub(/\s\s/, "")
+    
+    rating_list.each do |rating|
+      description = rating.css(".rating_bench strong").text
+
+      win_score = rating.css(".win strong").text
+      winner_rating = { :description => description, :rating => win_score }
+      @winner << winner_rating
+
+      lose_score = rating.css(".lose strong").text
+      loser_rating = { :description => description, :rating => lose_score }
+      @loser << loser_rating
+    end
+    @comparison = { :winner => @winner, :loser => @loser, :product_1 => product_1, :product_2 => product_2 }
+  end
 
   def get_articles
     require 'open-uri'
