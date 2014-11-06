@@ -73,8 +73,10 @@ class ArticlesController < ApplicationController
     url = "http://anandtech.com/SearchResults?q=#{search}"
 
     doc = Nokogiri::HTML(open(url))
+
+    @results = scrape_articles(doc, true) 
     
-    render :json => {:string => search }
+    render :json => {:articles => @results }
 
   end
 
