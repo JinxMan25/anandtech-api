@@ -190,8 +190,11 @@ class ArticlesController < ApplicationController
       image_link = article_container.css("img").first.attr("src")
 
       article_description = article_container.css(".cont_box1_txt p").text
-
-      author = article_container.css(".cont_box1_txt .b").text
+      if isFiltered
+        author = article_container.css(".cont_box1_txt .b").text
+      else
+        author = article_container.css(".cont_box1_txt span a").text
+      end
 
       comment_count = article_container.css(".cont_box1_txt strong").text
 
