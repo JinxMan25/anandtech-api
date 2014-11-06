@@ -62,8 +62,19 @@ class ArticlesController < ApplicationController
       get_bench(doc)
     end
 
-
     render :json => @bench_comparison
+
+  end
+
+  def search_results
+    search = params[:querystring].to_s
+    search.gsub!(/\s/, "+")
+
+    url = "http://anandtech.com/SearchResults?q=#{search}"
+
+    doc = Nokogiri::HTML(open(url))
+    
+    render :json => {:string => search }
 
   end
 
