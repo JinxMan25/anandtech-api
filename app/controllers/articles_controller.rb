@@ -196,7 +196,6 @@ class ArticlesController < ApplicationController
       comment_count = article_container.css(".cont_box1_txt strong").text
 
       posted_on = article_container.css(".cont_box1_txt span").text
-
       posted = /[0-9]\s\w+\s\w+/.match("#{posted_on}").to_s  
 
       if posted.empty?
