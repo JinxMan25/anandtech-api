@@ -92,15 +92,15 @@ class ArticlesController < ApplicationController
     @gallery = []
 
     gallery.each do |picture|
-      picture = gallery.css("img").attr("src").text
+      thumbnail = picture.css("img").attr("src").text
 
-      description = gallery.css("span").text
+      description = picture.css("span").text
 
-      gallery_hash = { :thumbnail => picture, :description => description }
+      gallery_hash = { :thumbnail => thumbnail, :description => description }
       @gallery << gallery_hash
     end
 
-    render :json => {:gallery => @gallery }
+    render :json => @gallery 
   end
 
   def next_page

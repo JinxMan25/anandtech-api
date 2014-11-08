@@ -7,6 +7,7 @@ AnandtechApi::Application.routes.draw do
   get "bench/single_cpu/:value", :to => "articles#single_cpu_benchmark"
   get "bench/comparison/:first/:second", :to => "articles#bench_comparison"
   get "search/:querystring", :to => "articles#search_results"
+  get "gallery/:page", :to => "articles#gallery"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
