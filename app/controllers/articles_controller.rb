@@ -80,6 +80,19 @@ class ArticlesController < ApplicationController
 
   end
 
+  def gallery
+    page = params[:page]
+
+    url = "http://anandtech.com/Gallery/#{page}"
+
+    doc = Nokogiri::HTML(open(url))
+
+    gallery = doc.css(".gallery li")
+
+    gallery.each do |picture|
+    end
+  end
+
   def next_page
     page = params[:page].to_i
 
