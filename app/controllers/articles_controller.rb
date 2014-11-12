@@ -10,6 +10,17 @@ class ArticlesController < ApplicationController
     search_query = params[:search_query]
   end
 
+  def get_podcast
+    page = params[:page].to_i
+     
+    url = "http://anandtech.com/tag/podcast/#{page}"
+
+    doc = Nokogiri::HTML(open(url))
+
+    render :json => @
+
+  end
+
   def filtered
     _filter = params[:filter].to_s
     if params[:page]
