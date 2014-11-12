@@ -17,7 +17,11 @@ class ArticlesController < ApplicationController
 
     doc = Nokogiri::HTML(open(url))
 
-    render :json => @
+    @podcasts = Rails.cache.fetch("podcasts/#{page}", :expires_in => 1.day) do
+      scrape_articles(doc, true)
+    end
+
+    render :json => @podcasts
 
   end
 
