@@ -133,14 +133,17 @@ class ArticlesController < ApplicationController
     link = "http://anandtech.com/#{anchor}"
 
     doc = Nokogiri::HTML(open(link))
-    article_title = doc.css(".blog_top_left h2").text
-    @article = {:article => article_content, :title => article_title, :select_options => select_options }
-    render :json => @article
+    @article_content = Rails.cache.fetch("article/#{anchor}", :expires_in => 1.day go) do
+      article_content(doc)
+    end
+    render :json => @article_content
   end
 
   private
 
   def article_content(doc)
+
+    article_title = doc.css(".blog_top_left h2").text
 
     review = doc.at(".review")
     article_content = []
@@ -168,6 +171,8 @@ class ArticlesController < ApplicationController
         end
       end
     end
+    @content = { :article => article_content, :title => article_title, :select_options => select_options }
+    @content
   end
 
   def get_bench(doc)
