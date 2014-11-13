@@ -134,6 +134,14 @@ class ArticlesController < ApplicationController
 
     doc = Nokogiri::HTML(open(link))
     article_title = doc.css(".blog_top_left h2").text
+    @article = {:article => article_content, :title => article_title, :select_options => select_options }
+    render :json => @article
+  end
+
+  private
+
+  def article_content(doc)
+
     review = doc.at(".review")
     article_content = []
     select_options = []
@@ -160,11 +168,7 @@ class ArticlesController < ApplicationController
         end
       end
     end
-    @article = {:article => article_content, :title => article_title, :select_options => select_options }
-    render :json => @article
   end
-
-  private
 
   def get_bench(doc)
     rating_list = doc.css(".rating_list")
