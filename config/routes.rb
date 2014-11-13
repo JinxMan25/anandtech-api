@@ -8,6 +8,7 @@ AnandtechApi::Application.routes.draw do
   get "bench/comparison/:first/:second", :to => "articles#bench_comparison"
   get "search/:querystring", :to => "articles#search_results"
   get "gallery/:page", :to => "articles#gallery"
+  get "podcasts/:page", :to => "#articles#get_podcast"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
